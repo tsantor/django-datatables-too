@@ -35,6 +35,9 @@ INSTALLED_APPS = [
 
     # if your app has other dependencies that need to be added to the site
     # they should be added here
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
 ]
 
 MIDDLEWARE = [
@@ -122,6 +125,9 @@ PERM_FILTER = {
         "contenttypes",
         "sessions",
         "sites",
+        # All-auth
+        "account",
+        "socialaccount",
     ],
     "HIDE_PERMS": [
         # Django built-in auth permissions
@@ -132,5 +138,10 @@ PERM_FILTER = {
     ],
     "UNREGISTER_MODELS": [
         "django.contrib.sites.models.Site",
+        # All-auth
+        "allauth.account.models.EmailAddress",
+        "allauth.socialaccount.models.SocialAccount",
+        "allauth.socialaccount.models.SocialApp",
+        "allauth.socialaccount.models.SocialToken",
     ],
 }

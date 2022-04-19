@@ -17,6 +17,10 @@ Typically we have **no reason**, in any Django project, to expose the following 
 - Hide permissions using app and codename (more granular)
 - Hide models from the Django Admin
 
+## Requirements
+Django 3 or 4
+Python 3
+
 ## Quickstart
 
 Install Django Perm Filter::
