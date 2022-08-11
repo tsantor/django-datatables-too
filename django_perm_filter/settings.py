@@ -3,14 +3,12 @@ Settings for Django Perm Filter are all namespaced in the PERM_FILTER setting.
 For example your project's `settings.py` file might look like this:
 
 PERM_FILTER = {
-    "HIDE_APPS": [
+    "HIDE_PERMS": [
         # Django built-in apps
         "admin",
         "contenttypes",
         "sessions",
         "sites",
-    ],
-    "HIDE_PERMS": [
         # Django built-in auth permissions
         "auth.view_permission",
         "auth.add_permission",
@@ -31,9 +29,10 @@ from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
 DEFAULTS = {
-    "HIDE_APPS": [],
     "HIDE_PERMS": [],
     "UNREGISTER_MODELS": [],
+    "USER_ADMIN": "django.contrib.auth.admin.UserAdmin",
+    "GROUP_ADMIN": "django.contrib.auth.admin.GroupAdmin",
 }
 
 
@@ -66,7 +65,12 @@ def import_from_string(val, setting_name):
     try:
         return import_string(val)
     except ImportError as e:
-        msg = "Could not import '%s' for API setting '%s'. %s: %s." % (val, setting_name, e.__class__.__name__, e)
+        msg = "Could not import '%s' for API setting '%s'. %s: %s." % (
+            val,
+            setting_name,
+            e.__class__.__name__,
+            e,
+        )
         raise ImportError(msg)
 
 
@@ -76,7 +80,7 @@ class APISettings:
     properties. For example:
 
         from django_PERM_FILTER.settings import api_settings
-        print(api_settings.IP_GEO_HANDLER)
+        print(api_settings.HIDE_PERMS)
 
     Any setting with string import paths will be automatically resolved
     and return the class, rather than the string literal.
@@ -86,6 +90,7 @@ class APISettings:
     under the PERM_FILTER name. It is not intended to be used by 3rd-party
     apps, and test helpers like `override_settings` may not work as expected.
     """
+
     def __init__(self, user_settings=None, defaults=None, import_strings=None):
         if user_settings:
             self._user_settings = self.__check_user_settings(user_settings)
@@ -95,8 +100,8 @@ class APISettings:
 
     @property
     def user_settings(self):
-        if not hasattr(self, '_user_settings'):
-            self._user_settings = getattr(settings, 'PERM_FILTER', {})
+        if not hasattr(self, "_user_settings"):
+            self._user_settings = getattr(settings, "PERM_FILTER", {})
         return self._user_settings
 
     def __getattr__(self, attr):
@@ -123,23 +128,26 @@ class APISettings:
         SETTINGS_DOC = "TODO"
         for setting in REMOVED_SETTINGS:
             if setting in user_settings:
-                raise RuntimeError("The '%s' setting has been removed. Please refer to '%s' for available settings." % (setting, SETTINGS_DOC))
+                raise RuntimeError(
+                    "The '%s' setting has been removed. Please refer to '%s' for available settings."
+                    % (setting, SETTINGS_DOC)
+                )
         return user_settings
 
     def reload(self):
         for attr in self._cached_attrs:
             delattr(self, attr)
         self._cached_attrs.clear()
-        if hasattr(self, '_user_settings'):
-            delattr(self, '_user_settings')
+        if hasattr(self, "_user_settings"):
+            delattr(self, "_user_settings")
 
 
 api_settings = APISettings(None, DEFAULTS, IMPORT_STRINGS)
 
 
 def reload_api_settings(*args, **kwargs):
-    setting = kwargs['setting']
-    if setting == 'PERM_FILTER':
+    setting = kwargs["setting"]
+    if setting == "PERM_FILTER":
         api_settings.reload()
 
 

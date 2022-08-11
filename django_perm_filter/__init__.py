@@ -1,4 +1,4 @@
-__version__ = '0.1.1'
+__version__ = "0.2.0"
 
-from .utils import filter_perms, unregister_models  # noqa
-from .mixins import PermissionFilterMixin  # noqa
+from django_perm_filter.mixins import PermissionFilterMixin  # noqa
+from django_perm_filter.utils import filter_perms, unregister_models  # noqa

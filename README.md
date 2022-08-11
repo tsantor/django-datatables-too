@@ -2,7 +2,7 @@
 # Django Perm Filter
 A simple app that can be included in Django projects which hides app specific permissions from any type of User.  Easily add entire apps, specific permissions or models and it will take care of the rest.  Non-destructive (Does **not** delete permissions).
 
-Typically we have **no reason**, in any Django project, to expose the following permissions for Users or Groups:
+For example, typically we have **no reason**, in any Django project, to expose the following permissions for Users or Groups:
 
 | App          | Model        | Permission                              |
 |--------------|--------------|-----------------------------------------|
@@ -41,21 +41,17 @@ INSTALLED_APPS = (
 In your `settings.py` add a entry for `PERM_FILTER`:
 ```
 PERM_FILTER = {
-    "HIDE_APPS": [
-        # Django built-in apps
+    "HIDE_PERMS": [
+        # Use app name only to hide all app related permissions
         "admin",
         "contenttypes",
         "sessions",
         "sites",
-        # Other apps you wish to hide
-    ],
-    "HIDE_PERMS": [
-        # Django built-in auth permissions
+        # Use app.codename to get more granular
         "auth.view_permission",
         "auth.add_permission",
         "auth.change_permission",
         "auth.delete_permission",
-        # Other app.codename perms you wish to hide
     ],
     "UNREGISTER_MODELS": [
         "django.contrib.sites.models.Site",
@@ -64,33 +60,23 @@ PERM_FILTER = {
 ```
 
 ## Optional
-By default Django Perms Filter will do the following when the app is ready. However, feel free to override to extend your own built-in Django Group or User Model Admins.
+By default `django_perm_filter` will register a new `UserAdmin` and `GroupAdmin` which extend `django.contrib.auth.admin.UserAdmin` and `django.contrib.auth.admin.GroupAdmin` that simply adds permissions filtering.  If you would like it to extend your own custom `UserAdmin` or `GroupAdmin` classes, then set the class path in the `PERM_FILTER` settings.
+
 ```
-from django.contrib import admin
-from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import GroupAdmin, UserAdmin
-from django.contrib.auth.models import Group
+PERM_FILTER = {
+  ...
+  "USER_ADMIN": "myapp.user.admin.UserAdmin",
+  "GROUP_ADMIN": "myapp.user.admin.GroupAdmin",
+}
 
-from django_perm_filter import PermissionFilterMixin
-from django_perm_filter import unregister_models
-
-User = get_user_model()
-
-
-class MyGroupAdmin(PermissionFilterMixin, GroupAdmin):
-    pass
-
-
-class MyUserAdmin(PermissionFilterMixin, UserAdmin):
-    pass
-
-
-# Override default registered Admin for User and Group
-admin.site.unregister(User)
-admin.site.unregister(Group)
-admin.site.register(User, MyUserAdmin)
-admin.site.register(Group, MyGroupAdmin)
 ```
+
+## Development
+Assumes you have `pyenv` and `make` installed (you should!).
+```
+make scratch
+```
+
 
 ## Running Tests
 

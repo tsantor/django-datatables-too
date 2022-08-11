@@ -1,8 +1,9 @@
-from .utils import filter_perms
+from django_perm_filter.utils import filter_perms
 
 
 class PermissionFilterMixin(object):
     """Django admin mixin."""
+
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name in ("permissions", "user_permissions"):
             qs = kwargs.get("queryset", db_field.remote_field.model.objects)
