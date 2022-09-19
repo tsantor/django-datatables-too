@@ -5,6 +5,8 @@ from django.utils.module_loading import import_string
 
 from django_perm_filter.mixins import PermissionFilterMixin
 from django_perm_filter.settings import api_settings
+from django.contrib.admin.sites import NotRegistered
+import contextlib
 
 User = get_user_model()
 
@@ -21,7 +23,11 @@ class GroupAdmin(PermissionFilterMixin, group_admin):
 
 
 # Override default registered Admin for User and Group
-admin.site.unregister(User)
-admin.site.unregister(Group)
+with contextlib.suppress(NotRegistered):
+    admin.site.unregister(User)
+
+with contextlib.suppress(NotRegistered):
+    admin.site.unregister(Group)
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Group, GroupAdmin)
