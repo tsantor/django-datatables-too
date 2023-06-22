@@ -1,4 +1,3 @@
-
 # Django Perm Filter
 A simple app that can be included in Django projects which hides app specific permissions from any type of User.  Easily add entire apps, specific permissions or models and it will take care of the rest.  Non-destructive (Does **not** delete permissions).
 
@@ -65,8 +64,8 @@ By default `django_perm_filter` will register a new `UserAdmin` and `GroupAdmin`
 ```
 PERM_FILTER = {
   ...
-  "USER_ADMIN": "myapp.user.admin.UserAdmin",
-  "GROUP_ADMIN": "myapp.user.admin.GroupAdmin",
+  "USER_ADMIN": "myapp.users.admin.UserAdmin",
+  "GROUP_ADMIN": "myapp.users.admin.GroupAdmin",
 }
 
 ```
@@ -75,22 +74,4 @@ PERM_FILTER = {
 Assumes you have `pyenv` and `make` installed (you should!).
 ```
 make scratch
-```
-
-
-## Running Tests
-
-Does the code actually work?
-
-```bash
-source <YOURVIRTUALENV>/bin/activate
-(myenv) $ pip install tox
-(myenv) $ tox
-```
-
-## Development commands
-
-```bash
-pip install -r requirements_dev.txt
-invoke -l
 ```

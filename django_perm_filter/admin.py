@@ -1,12 +1,13 @@
+import contextlib
+
 from django.contrib import admin
+from django.contrib.admin.sites import NotRegistered
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.utils.module_loading import import_string
 
 from django_perm_filter.mixins import PermissionFilterMixin
 from django_perm_filter.settings import api_settings
-from django.contrib.admin.sites import NotRegistered
-import contextlib
 
 User = get_user_model()
 

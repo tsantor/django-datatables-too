@@ -1,4 +1,5 @@
-invoke
 twine
 wheel
-zest.releaser
+build
+django-allauth
+django

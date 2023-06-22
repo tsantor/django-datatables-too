@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import
+from __future__ import absolute_import, unicode_literals
 
-from django.urls import path  # include
 from django.contrib import admin
+from django.urls import path
 
 urlpatterns = [
-    path(r'admin/', admin.site.urls),
-    # path(r'', include('django_perm_filter.urls')),
+    path('admin/', admin.site.urls),
+    # path('', include('django_perm_filter.urls')),
 ]
