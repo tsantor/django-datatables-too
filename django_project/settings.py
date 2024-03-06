@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.sites",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -48,9 +49,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",  # allauth
 ]
 
-ROOT_URLCONF = "tests.urls"
+ROOT_URLCONF = "django_project.urls"
 
 TEMPLATES = [
     {
@@ -70,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "tests.wsgi.application"
+WSGI_APPLICATION = "django_project.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

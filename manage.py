@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import
 
 import os
 import sys
+from pathlib import Path
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
+    sys.path.append(str(Path(__file__).resolve().parent / "src"))
+
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_project.settings")
     from django.core.management import execute_from_command_line
 
     execute_from_command_line(sys.argv)
