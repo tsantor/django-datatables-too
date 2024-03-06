@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 from django.contrib import admin
 from django.urls import path
 
+admin.site.enable_nav_sidebar = False
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('', include('django_perm_filter.urls')),
+    path("admin/", admin.site.urls),
 ]

@@ -1,4 +1,3 @@
-# -*- coding: utf-8
 from django.apps import AppConfig
 
 from django_perm_filter.utils import unregister_models

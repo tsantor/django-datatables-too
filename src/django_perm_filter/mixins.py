@@ -1,7 +1,7 @@
 from django_perm_filter.utils import filter_perms
 
 
-class PermissionFilterMixin(object):
+class PermissionFilterMixin:
     """Django admin mixin."""
 
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):

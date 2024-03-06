@@ -1,22 +1,24 @@
 # Django Perm Filter
-A simple app that can be included in Django projects which hides app specific permissions from any type of User.  Easily add entire apps, specific permissions or models and it will take care of the rest.  Non-destructive (Does **not** delete permissions).
+
+A simple app that can be included in Django projects which hides app specific permissions from any type of User. Easily add entire apps, specific permissions or models and it will take care of the rest. Non-destructive (Does **not** delete permissions).
 
 For example, typically we have **no reason**, in any Django project, to expose the following permissions for Users or Groups:
 
 | App          | Model        | Permission                              |
-|--------------|--------------|-----------------------------------------|
+| ------------ | ------------ | --------------------------------------- |
 | admin        | log entry    | Can view/add/change/delete log entry    |
 | auth         | permission   | Can view/add/change/delete permission   |
 | contenttypes | content type | Can view/add/change/delete content type |
 | sessions     | session      | Can view/add/change/delete session      |
 
-
 ## Features
+
 - Hide all permissions for an App
 - Hide permissions using app and codename (more granular)
 - Hide models from the Django Admin
 
 ## Requirements
+
 Django 3 or 4
 Python 3
 
@@ -25,7 +27,7 @@ Python 3
 Install Django Perm Filter::
 
 ```bash
-pip install django-perm-filter
+python3 -m pip install django-perm-filter
 ```
 
 Add it to your `INSTALLED_APPS` at the bottom:
@@ -37,8 +39,11 @@ INSTALLED_APPS = (
 )
 ```
 
+### Settings
+
 In your `settings.py` add a entry for `PERM_FILTER`:
-```
+
+```python
 PERM_FILTER = {
     "HIDE_PERMS": [
         # Use app name only to hide all app related permissions
@@ -58,10 +63,11 @@ PERM_FILTER = {
 }
 ```
 
-## Optional
-By default `django_perm_filter` will register a new `UserAdmin` and `GroupAdmin` which extend `django.contrib.auth.admin.UserAdmin` and `django.contrib.auth.admin.GroupAdmin` that simply adds permissions filtering.  If you would like it to extend your own custom `UserAdmin` or `GroupAdmin` classes, then set the class path in the `PERM_FILTER` settings.
+### Overrides
 
-```
+By default `django_perm_filter` will register a new `UserAdmin` and `GroupAdmin` which extend `django.contrib.auth.admin.UserAdmin` and `django.contrib.auth.admin.GroupAdmin` that simply adds permissions filtering. If you would like it to extend your own custom `UserAdmin` or `GroupAdmin` classes, then set the class path in the `PERM_FILTER` settings.
+
+```python
 PERM_FILTER = {
   ...
   "USER_ADMIN": "myapp.users.admin.UserAdmin",
@@ -70,8 +76,21 @@ PERM_FILTER = {
 
 ```
 
-## Development
-Assumes you have `pyenv` and `make` installed (you should!).
-```
-make scratch
-```
+## Local Development
+
+1. `make env`
+1. `make reqs`
+1. `make makemigrations`
+1. `make migrate`
+1. `make serve`
+
+- Visit `http://127.0.0.1:8000/admin/` for the Django Admin
+- Visit `http://127.0.0.1:8000/api/docs/` for the API docs
+
+### Testing
+
+Currently django_spaday has **94%** test coverage.
+
+- Pytest: `make pytest`
+- Coverage: `make coverage`
+  - Open Report: `make open_coverage`

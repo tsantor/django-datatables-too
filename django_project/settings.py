@@ -18,9 +18,7 @@ SECRET_KEY = "fqr1#2lon7^(e#_4vg2*zi#30y36#^46!k(-9hr2uu&j+@l0jx"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "*",
-]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -32,13 +30,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Our app
-    "django_perm_filter",
     # if your app has other dependencies that need to be added to the site
     # they should be added here
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    # Our app
+    "django_perm_filter",
 ]
 
 MIDDLEWARE = [
@@ -111,8 +109,6 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -120,14 +116,25 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+# -------------------------------------------------------------------------------
+# OUR TEST CONFIG - mimick cookiecutter-django bare minimum
+# -------------------------------------------------------------------------------
 
-# Our app settings
+SITE_ID = 1
+
+# MIGRATIONS
+# MIGRATION_MODULES = {"sites": "django_project.contrib.sites.migrations"}
+
+# -------------------------------------------------------------------------------
+# Perm Filer
+# -------------------------------------------------------------------------------
 PERM_FILTER = {
     "HIDE_PERMS": [
         # Django built-in apps
         "admin",
         "contenttypes",
         "sessions",
+        "sites",
         # All-auth
         "account",
         "socialaccount",

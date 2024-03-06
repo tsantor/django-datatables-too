@@ -34,20 +34,29 @@ reqs:  ## Install requirements
 		python -m pip install -r requirements_dev.txt && \
 		python -m pip install -r requirements_test.txt
 
+env_remove:  ## Remove virtual environment
+	pyenv uninstall ${venv}
+
+pip_list:  ## run pip list
+	python3 -m pip list
+
+pip_freeze:  ## run pipfreezer
+	pipfreezer
+
+manage:	## run django manage.py (eg - make manage cmd="shell")
+	python3 manage.py ${cmd}
+
+superuser:  ## Create superuser
+	python3 manage.py createsuperuser
+
 migrations:  ## Create migrations
 	python3 manage.py makemigrations
 
 migrate:  ## Apply migrations
 	python3 manage.py migrate
 
-superuser:  ## Create superuser
-	python3 manage.py createsuperuser
-
 serve:  ## Run server
 	python3 manage.py runserver 127.0.0.1:8000
-
-manage:	## run django manage.py (eg - make manage cmd="shell")
-	python3 manage.py ${cmd}
 
 show_urls:  ## show urls
 	python3 manage.py show_urls
@@ -57,9 +66,6 @@ shell:  ## run shell
 
 flush:  ## Flush database
 	python3 manage.py flush
-
-pip_list:  ## run pip list
-	python3 -m pip list
 
 tree:  ## Show directory tree
 	tree -I 'build|dist|htmlcov|node_modules|migrations|contrib|__pycache__|*.egg-info'
@@ -98,6 +104,15 @@ coverage_skip:  ## Run tests with coverage
 
 open_coverage:  ## open coverage report
 	open htmlcov/index.html
+
+clear_pytest_cache:  ## clear pytest cache
+	# pytest --cache-clear
+	rm -rf .pytest_cache
+
+clear_coverage:  ## clear coverage data
+	coverage erase
+
+clear_test_cache: clear_pytest_cache clear_coverage  ## clear test cache
 
 # -----------------------------------------------------------------------------
 # Deploy
