@@ -74,14 +74,26 @@ tree:  ## Show directory tree
 # Cleanup
 # -----------------------------------------------------------------------------
 
-clean-build: ## remove build artifacts
+clean_build: ## remove build artifacts
 	rm -fr build/ dist/ .eggs/
 	find . -name '*.egg-info' -o -name '*.egg' -exec rm -fr {} +
 
-clean-pyc: ## remove Python file artifacts
+clean_pyc: ## remove Python file artifacts
 	find . \( -name '*.pyc' -o -name '*.pyo' -o -name '*~' -o -name '__pycache__' \) -exec rm -fr {} +
 
-clean: clean-build clean-pyc ## remove all build, test, coverage and Python artifacts
+clean: clean_build clean_pyc ## remove all build, test, coverage and Python artifacts
+
+clean_pytest_cache:  ## clear pytest cache
+	rm -rf .pytest_cache
+
+clean_tox_cache:  ## clear tox cache
+	rm -rf .tox
+
+clean_coverage:  ## clear coverage data
+	coverage erase
+	rm -rf htmlcov
+
+clean_tests: clean_pytest_cache clean_tox_cache clean_coverage  ## clear test cache
 
 # -----------------------------------------------------------------------------
 # Testing

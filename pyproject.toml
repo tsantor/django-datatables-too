@@ -17,7 +17,7 @@ classifiers = [
 dependencies = ["django>=4.0,<5.0"]
 
 dynamic = ["version", "readme"]
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 authors = [{ name = "Tim Santor", email = "tsantor@xstudios.com" }]
 
 [project.optional-dependencies]
