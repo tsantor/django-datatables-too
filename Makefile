@@ -31,8 +31,8 @@ env:  ## Create virtual environment
 
 reqs:  ## Install requirements
 	python3 -m pip install -U pip && \
-		python -m pip install -r requirements_dev.txt && \
-		python -m pip install -r requirements_test.txt
+		python -m pip install -r requirements.txt && \
+		pre-commit install
 
 env_remove:  ## Remove virtual environment
 	pyenv uninstall ${venv}
@@ -68,7 +68,7 @@ flush:  ## Flush database
 	python3 manage.py flush
 
 tree:  ## Show directory tree
-	tree -I 'build|dist|htmlcov|node_modules|migrations|contrib|__pycache__|*.egg-info'
+	tree -I 'build|dist|htmlcov|node_modules|migrations|contrib|__pycache__|*.egg-info|staticfiles|media'
 
 # -----------------------------------------------------------------------------
 # Cleanup
@@ -116,15 +116,6 @@ coverage_skip:  ## Run tests with coverage
 
 open_coverage:  ## open coverage report
 	open htmlcov/index.html
-
-clear_pytest_cache:  ## clear pytest cache
-	# pytest --cache-clear
-	rm -rf .pytest_cache
-
-clear_coverage:  ## clear coverage data
-	coverage erase
-
-clear_test_cache: clear_pytest_cache clear_coverage  ## clear test cache
 
 # -----------------------------------------------------------------------------
 # Deploy
