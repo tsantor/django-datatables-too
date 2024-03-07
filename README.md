@@ -89,7 +89,7 @@ PERM_FILTER = {
 
 ### Testing
 
-Currently django_spaday has **94%** test coverage.
+Currently `django_perm_filter` has **73%** test coverage.
 
 - Pytest: `make pytest`
 - Coverage: `make coverage`
