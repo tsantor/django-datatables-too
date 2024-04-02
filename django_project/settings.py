@@ -70,6 +70,10 @@ TEMPLATES = [
     },
 ]
 
+# DEBUGGING FOR TEMPLATES
+# ------------------------------------------------------------------------------
+TEMPLATES[0]["OPTIONS"]["debug"] = True
+
 WSGI_APPLICATION = "django_project.wsgi.application"
 
 # Database

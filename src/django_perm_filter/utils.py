@@ -10,6 +10,11 @@ from django_perm_filter.settings import api_settings
 logger = logging.getLogger(__name__)
 
 
+def sort_perms(actions):
+    # Split each string by "_" and sort based on the second element, then the first
+    return sorted(actions, key=lambda x: (x.split("_")[1], x.split("_")[0]))
+
+
 def filter_perms(qs: QuerySet) -> QuerySet:
     """
     Filters a queryset by excluding permissions specified in the HIDE_PERMS setting.
@@ -45,10 +50,11 @@ def unregister_models() -> None:
         for model_str in api_settings.UNREGISTER_MODELS:
             try:
                 model = import_string(model_str)
-                admin.site.unregister(model)
+                if admin.site.is_registered(model):
+                    admin.site.unregister(model)
             except (ModuleNotFoundError, RuntimeError) as e:
                 logger.warning(
                     "%s %s",
                     str(e),
                     "Ensure the module is installed and/or added to INSTALLED_APPS if need be.",
-                )  # noqa
+                )
