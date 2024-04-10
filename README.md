@@ -1,5 +1,9 @@
 # Django Perm Filter
 
+![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)
+
+<!-- ![Code Style](https://img.shields.io/badge/code_style-ruff-black) -->
+
 A simple app that can be included in Django projects which hides app specific permissions from any type of User. Easily add entire apps, specific permissions or models and it will take care of the rest. Non-destructive (Does **not** delete permissions).
 
 For example, typically we have **no reason**, in any Django project, to expose the following permissions for Users or Groups:
@@ -24,13 +28,13 @@ Python 3
 
 ## Quickstart
 
-Install Django Perm Filter::
+Install Django Perm Filter:
 
 ```bash
 python3 -m pip install django-perm-filter
 ```
 
-Add it to your `INSTALLED_APPS` at the bottom:
+Add it to your `INSTALLED_APPS`:
 
 ```python
 INSTALLED_APPS = (
@@ -78,19 +82,23 @@ PERM_FILTER = {
 
 ## Local Development
 
-1. `make env`
-1. `make reqs`
-1. `make makemigrations`
-1. `make migrate`
-1. `make serve`
+```bash
+make env
+make pip_install
+make migrations
+make migrate
+make superuser
+make serve
+```
+
+or simply `make from_scratch`
 
 - Visit `http://127.0.0.1:8000/admin/` for the Django Admin
-- Visit `http://127.0.0.1:8000/api/docs/` for the API docs
 
 ### Testing
 
-Currently `django_perm_filter` has **73%** test coverage.
-
-- Pytest: `make pytest`
-- Coverage: `make coverage`
-  - Open Report: `make open_coverage`
+```bash
+make pytest
+make coverage
+make open_coverage
+```
