@@ -15,8 +15,19 @@ user_admin = import_string(api_settings.USER_ADMIN)
 group_admin = import_string(api_settings.GROUP_ADMIN)
 
 
+def get_user_ordering_field():
+    """Determine the ordering field based on the existence of 'username' or 'email'"""
+    if hasattr(User, "username") and User.username is not None:
+        return "username"
+    if hasattr(User, "email"):
+        return "email"
+    return None
+
+
 class UserAdmin(PermissionFilterMixin, user_admin):
     """Custom User Admin with permission filtering."""
+
+    ordering = [get_user_ordering_field()]
 
 
 class GroupAdmin(PermissionFilterMixin, group_admin):
